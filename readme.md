@@ -87,7 +87,7 @@ run()
 Useful for using a callback based API within an async function
 without any modifications required within the callback itself.
 
-Must be a callback last API (for callback first, just use when).
+Must be used with a callback last API (for callback first, just use [`when`](#when) manually).
 
 Used in conjunction with the [`done`](#done) symbol and optionally
 the [`count`](#count) symbol. The `asyncOps` option is explored in the [`count`](#count) symbol documentation.
@@ -130,7 +130,7 @@ run()
 
 ### Whenify Method
 
-Whenify an object method so that the method[done] (where done is the [`done`](#done) symbol) can be awaited. This can be particularly useful when writing tests for a instance with callback based methods. The test be both self documenting an async compatible.
+Whenify an object method so that `method[done]` can be awaited (where `done` is the [`done`](#done) symbol). This can be particularly useful when writing tests for an instance with callback based methods. The test be both self documenting and async compatible.
 
 Implementation:
 
@@ -208,7 +208,7 @@ const { immediate } = require('nonsynchronous')
 async function run () {
   console.log('this tick')
   await immediate()
-  console.lgo('next tick')
+  console.log('next tick')
 }
 run()
 ```
@@ -230,7 +230,7 @@ Example:
 const { timeout } = require('nonsynchronous')
 async function run () {
   await timeout(1000)
-  console.lgo('timeout complete')
+  console.log('timeout complete')
 }
 run()
 ```
@@ -239,14 +239,14 @@ run()
 
 ### Done
 
-The `done` symbol is used with [`whenify`](#whenify) and [`whenifyMethod`](#whenifymethod)
+The `done` symbol is used with [`whenify`](#whenify) and [`whenifyMethod`](#whenify-method)
 to access a promise on the function that has been whenified
 which can be awaited. The promise will complete once the
 callback for a whenified function has been called.
 
 ### Count
 
-The `count` symbol is  used with [`whenify`](#whenify) and [`whenifyMethod`](#whenifymethod) to access a the total amount
+The `count` symbol is  used with [`whenify`](#whenify) and [`whenifyMethod`](#whenify-method) to access a the total amount
 of times a whenified functions callback was called. This is
 only useful when you set the `asyncOps` option to greater
 than 1. 
