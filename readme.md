@@ -52,13 +52,15 @@ run()
 
 ### When
 
-Useful for when you want to explicitly use a callback based API within an async function. 
+Useful for when you want to explicitly use a callback based API within an async function. The function returned from `when`
+must be called *after* awaiting the `done` method on that function
+other wise an error `called before awaiting done()` will be thrown.
 
 Implementation:
 
 ```js
 const when = () => {
-  var done = () => { throw Error('did not happen') }
+  var done = () => { throw Error('called before awaiting done()') }
   const fn = () => done()
   fn.done = promisify((cb) => { done = cb })
   return fn
@@ -287,6 +289,23 @@ run()
 ## Behaviors
 
 Automatically includes and enable [make-promisies-safe](https://npm.im/make-promises-safe) which causes Node to treat unhandled rejections as unhandled exceptions (e.g. throws and exits).
+
+## Tests & Coverage
+
+```sh
+npm test
+```
+
+```
+Suites:   1 passed, 1 of 1 completed
+Asserts:  24 passed, of 24
+----------|----------|----------|----------|----------|-------------------|
+File      |  % Stmts | % Branch |  % Funcs |  % Lines | Uncovered Line #s |
+----------|----------|----------|----------|----------|-------------------|
+All files |      100 |      100 |      100 |      100 |                   |
+ index.js |      100 |      100 |      100 |      100 |                   |
+----------|----------|----------|----------|----------|-------------------|
+```
 
 ## License
 

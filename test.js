@@ -38,6 +38,10 @@ test('when', async ({ is }) => {
   await until.done()
   is(complete, true)
 })
+test('when – called prior to awaiting done()', async ({ throws }) => {
+  const until = when()
+  throws(() => until(), Error('called before awaiting done()'))
+})
 test('whenify', async ({ is }) => {
   const api = (cb) => setImmediate(cb, null, 'test')
   const nonsync = whenify(api)
@@ -108,10 +112,7 @@ test('count', async ({ is }) => {
   is(nonsync[count], 2)
 })
 test('custom Promisify Args', async ({ is }) => {
-  const multiArgApi = (cb) => {
-    console.log(typeof cb + '')
-    setImmediate(cb, null, 'circle', 'red')
-  }
+  const multiArgApi = (cb) => setImmediate(cb, null, 'circle', 'red')
   multiArgApi[customPromisifyArgs] = ['shape', 'color']
   const multiValApi = promisify(multiArgApi)  
   const { shape, color } = await multiValApi()

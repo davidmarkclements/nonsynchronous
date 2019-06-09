@@ -6,7 +6,7 @@ const done = Symbol('done')
 const count = Symbol('count')
 const customPromisifyArgs = (() => {
   var result
-  promisify(new Proxy(() => {}, { get (_, p) {
+  promisify(new Proxy(Function, { get (_, p) {
     if (/PromisifyArgs/.test(p.toString())) result = p
   } }))
   return result
@@ -14,7 +14,7 @@ const customPromisifyArgs = (() => {
 
 
 const when = () => {
-  var done = () => { throw Error('did not happen') }
+  var done = () => { throw Error('called before awaiting done()') }
   const fn = () => done()
   fn.done = promisify((cb) => { done = cb })
   return fn
