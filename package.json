@@ -1,0 +1,31 @@
+{
+  "name": "nonsynchronous",
+  "version": "1.0.0",
+  "description": "async/await callback fusioning utilities",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "async",
+    "await",
+    "utlities"
+  ],
+  "author": "David Mark Clements <david.mark.clements@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "events.once": "^2.0.2",
+    "make-promises-safe": "^5.0.0"
+  },
+  "devDependencies": {
+    "tap": "^14.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidmarkclements/nonsynchronous.git"
+  },
+  "bugs": {
+    "url": "https://github.com/davidmarkclements/nonsynchronous/issues"
+  },
+  "homepage": "https://github.com/davidmarkclements/nonsynchronous#readme"
+}
