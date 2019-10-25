@@ -1,6 +1,6 @@
 {
   "name": "nonsynchronous",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "async/await callback fusioning utilities",
   "main": "index.js",
   "scripts": {
