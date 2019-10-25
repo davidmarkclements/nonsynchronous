@@ -202,7 +202,7 @@ Implementation:
 
 ```js
 const promisifyOf = (method) => {
-  return (instance) => promisify((cb) => instance[method](cb))
+  return (instance) => promisify((...args) => instance[method](...args))
 }
 ```
 
@@ -214,7 +214,7 @@ const http = require('http')
 async function run () {
   const server = http.createServer()
   const listen = promisifyOf('listen')
-  await listen(server)()
+  await listen(server)(2000) // listen on port 2000
   console.log(server.address())
 }
 run()

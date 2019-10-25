@@ -41,7 +41,7 @@ const whenifyMethod = (instance, method, opts) => {
 }
 
 const promisifyOf = (method) => {
-  return (instance) => promisify((cb) => instance[method](cb))
+  return (instance) => promisify((...args) => instance[method](...args))
 }
 
 const _promisifyMethod = (instance, method) => {
