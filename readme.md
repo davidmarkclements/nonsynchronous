@@ -185,11 +185,41 @@ const http = require('http')
 async function run () {
   const server = http.createServer()
   promisifyMethod(server, 'listen')
-  await once(server.listen())
+  await server.listen()
   console.log(server.address())
 }
 run()
 ```
+
+### Promisify Of
+
+Partially apply a promisify of a particular method on any given instance
+without mutating the instance. This is useful as an alternative to `promisifyMethod` if you don't want to overwrite instance keys and/or 
+you have multiple different instances that you want to promisify the same
+method of.
+
+Implementation:
+
+```js
+const promisifyOf = (method) => {
+  return (instance) => promisify((cb) => instance[method](cb))
+}
+```
+
+Example:
+
+```js
+const { promisifyOf } = require('nonsynchronous')
+const http = require('http')
+async function run () {
+  const server = http.createServer()
+  const listen = promisifyOf('listen')
+  await listen(server)()
+  console.log(server.address())
+}
+run()
+```
+
 
 ### Immediate
 

@@ -12,7 +12,6 @@ const customPromisifyArgs = (() => {
   return result
 })()
 
-
 const when = () => {
   var done = () => { throw Error('called before awaiting done()') }
   const fn = () => done()
@@ -40,6 +39,11 @@ const whenifyMethod = (instance, method, opts) => {
   instance[method] = result
   return instance
 }
+
+const promisifyOf = (method) => {
+  return (instance) => promisify((cb) => instance[method](cb))
+}
+
 const _promisifyMethod = (instance, method) => {
   const result = promisify(instance[method])
   instance[method] = result
@@ -52,7 +56,6 @@ const promisifyMethod = (instance, ...methods) => {
 const immediate = promisify(setImmediate)
 const timeout = promisify(setTimeout)
 
-
 module.exports = {
   done,
   count,
@@ -62,6 +65,7 @@ module.exports = {
   whenifyMethod,
   promisifyMethod,
   promisify,
+  promisifyOf,
   immediate,
   timeout,
   once

@@ -1,21 +1,22 @@
 'use strict'
 const http = require('http')
 const { test } = require('tap')
-const { 
+const {
   promisify,
   once,
   when,
   whenify,
   whenifyMethod,
   promisifyMethod,
+  promisifyOf,
   immediate,
   timeout,
   count,
   done,
   customPromisifyArgs
- } = require('.')
+} = require('.')
 
- test('promisify', async ({ is }) => {
+test('promisify', async ({ is }) => {
   const api = (cb) => setImmediate(cb, null, 'test')
   const nonsync = promisify(api)
   is(await nonsync(), 'test')
@@ -56,7 +57,7 @@ test('whenify', async ({ is }) => {
   is(complete, true)
 })
 test('whenifyMethod', async ({ is }) => {
-  const api = {method: (cb) => setImmediate(cb, null, 'test')}
+  const api = { method: (cb) => setImmediate(cb, null, 'test') }
   whenifyMethod(api, 'method')
   var complete = false
   api.method((err, result) => {
@@ -100,7 +101,7 @@ test('count', async ({ is }) => {
       setImmediate(cb)
       setImmediate(cb)
     },
-    {asyncOps: 2} // expecting three calls of the callback
+    { asyncOps: 2 } // expecting three calls of the callback
   )
   var c = 0
   nonsync(() => {
@@ -114,8 +115,16 @@ test('count', async ({ is }) => {
 test('custom Promisify Args', async ({ is }) => {
   const multiArgApi = (cb) => setImmediate(cb, null, 'circle', 'red')
   multiArgApi[customPromisifyArgs] = ['shape', 'color']
-  const multiValApi = promisify(multiArgApi)  
+  const multiValApi = promisify(multiArgApi)
   const { shape, color } = await multiValApi()
   is(shape, 'circle')
   is(color, 'red')
+})
+
+test('promisifyOf', async ({ isNot }) => {
+  const server = http.createServer()
+  const listen = promisifyOf('listen')
+  await listen(server)()
+  isNot(server.address(), null)
+  server.close()
 })
