@@ -318,7 +318,7 @@ run()
 
 ## Behaviors
 
-Automatically includes and enable [make-promisies-safe](https://npm.im/make-promises-safe) which causes Node to treat unhandled rejections as unhandled exceptions (e.g. throws and exits).
+Automatically includes and enable [make-promises-safe](https://npm.im/make-promises-safe) which causes Node to treat unhandled rejections as unhandled exceptions (e.g. throws and exits).
 
 ## Tests & Coverage
 
